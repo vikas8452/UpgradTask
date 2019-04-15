@@ -2,6 +2,7 @@ package kick.career.upgradtask;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -197,10 +198,10 @@ wordsss=new ArrayList<StoredDatabase>();
 
         // TextView textView = (TextView) view.findViewById(R.id.clgName);
         //   String text = textView.getText().toString();
-        //Intent intent =new Intent(this,College_Details.class);
-        // intent.putExtra("position",position+"");
-        // Log.d(text,"clgName");
-        // startActivity(intent);
+        Intent intent =new Intent(this,Webview.class);
+         intent.putExtra("url",wordsss.get(position).getSpecialityQuestionLink());
+         Log.d("qwas",wordsss.get(position).getSpecialityQuestionLink());
+        startActivity(intent);
 
     }
     @Override
