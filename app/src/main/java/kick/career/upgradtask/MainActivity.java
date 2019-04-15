@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         webView.requestFocus(View.FOCUS_DOWN);
 
         //Show a progress dialog to the user
-//        pd = ProgressDialog.show(this, "", "Loading...",true);
+        pd = ProgressDialog.show(this, "", "Loading...",true);
 
         //Set a custom web view client
         webView.getSettings().setJavaScriptEnabled(true);

@@ -182,7 +182,7 @@ public class UserInterestActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-        //    pd = ProgressDialog.show(UserInterestActivity.this, "", "Loading...", true);
+            pd = ProgressDialog.show(UserInterestActivity.this, "", "Loading...", true);
         }
 
         @Override
