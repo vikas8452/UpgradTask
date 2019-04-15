@@ -68,21 +68,23 @@ wordsss=new ArrayList<StoredDatabase>();
 
                     String s1[]=s.split("/");
 
+                    wordsss.addAll(words);
 
-                    Log.d("size",words.size()+"");
                     String s2=s1[0];
+
+                    Log.d("size",wordsss.size()+"   "+s2);
                     ArrayList<StoredDatabase> list=new ArrayList<>();
                     for(int i=0;i<wordsss.size();i++)
                     {
-                        if(wordsss.get(i).getUid().equals(s2))
+                        Log.d("size", wordsss.get(i).getUid()+"   "+s2);
+                        if(wordsss.get(i).getUid().startsWith(s2))
                         {
-
                             list.add(wordsss.get(i));
                         }
                     }
 
                     // Toast.makeText(QuestionListActivity.this,,Toast.LENGTH_SHORT).show();
-
+                    Log.d("size",list.size()+"   "+s2);
                     ArrayAdapter_For_Question_List adapter = new ArrayAdapter_For_Question_List(QuestionListActivity.this,
                             R.layout.questions_layout, list);
                     listView.setAdapter(adapter);
@@ -132,7 +134,7 @@ wordsss=new ArrayList<StoredDatabase>();
         // Handle navigation view item clicks here.
 
         String s=item.getTitle().toString();
-        List<StoredDatabase> list=null;
+        ArrayList<StoredDatabase> list=new ArrayList<>();
         for(int i=0;i<wordsss.size();i++)
         {
            if(wordsss.get(i).getUid().equals(s))

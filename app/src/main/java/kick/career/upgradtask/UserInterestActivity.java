@@ -50,7 +50,10 @@ import kick.career.upgradtask.RoomBuilder.StoredDatabase;
 
 public class UserInterestActivity extends AppCompatActivity {
 
-  
+    private static final String PROFILE_URL = "https://api.linkedin.com/v1/people/~";
+    private static final String OAUTH_ACCESS_TOKEN_PARAM = "oauth2_access_token";
+    private static final String QUESTION_MARK = "?";
+    private static final String EQUALS = "=";
 
     private TextView welcomeText;
     private TextView msg;
@@ -144,19 +147,16 @@ public class UserInterestActivity extends AppCompatActivity {
 
 
                     String s1[]=s.split("/");
+               DatabaseHolder.getAppDatabase(UserInterestActivity.this).userDao().nukeDatabase();
 
 
-                  //  for(int j=0;j<4;j++) {
-
-                        selected=s1[0];
-                        new GetProfileRequestAsyncTask().execute("https://api.stackexchange.com/2.2/questions?tagged=c&site=stackoverflow");
-                 //   }
+                        new GetProfileRequestAsyncTask().execute("https://api.stackexchange.com/2.2/questions?tagged="+s1[0]+";"+s1[1]+"&site=stackoverflow");
 
 
 
-
-
-
+                    Intent startProfileActivity = new Intent(UserInterestActivity.this, QuestionListActivity.class);
+                    startActivity(startProfileActivity);
+                    finish();
 
                    // System.out
                            // .println(jsonGetRequest("https://api.stackexchange.com/2.2/questions?tagged=c;java&site=stackoverflow"));
@@ -237,14 +237,14 @@ public class UserInterestActivity extends AppCompatActivity {
             if (data != null) {
                 Log.e("data", data.toString());
                 final DaoForHashMap mDao= DatabaseHolder.getAppDatabase(UserInterestActivity.this).userDao();
-
+        mDao.nukeDatabase();
                 JsonArray jsonArray = (JsonArray) data.get("items");
                 int tag=0;
 
                 for(int i = 0; i < jsonArray.size(); i++){
 
                     tag++;
-                    mDao.nukeDatabase();
+
 
                     JsonObject obj = (JsonObject) jsonArray.get(i);
                     String link = obj.get("link").toString();
@@ -254,18 +254,14 @@ public class UserInterestActivity extends AppCompatActivity {
                     Log.e("linktitle",link+ " "+ title);
 
                     StoredDatabase word = new StoredDatabase();
-                    word.setUid(selected+questionId);
+                    word.setUid("c"+questionId);
                     word.setSpecialityName(title);
                     word.setSpecialityQuestionLink(link);
                     mDao.insert(word);
-                    if(tag>20)
-                        break;
+
 
                 }
 
-                Intent startProfileActivity = new Intent(UserInterestActivity.this, QuestionListActivity.class);
-                 startActivity(startProfileActivity);
-                finish();
 
             }
         }
