@@ -67,9 +67,9 @@ wordsss=new ArrayList<StoredDatabase>();
                     String s = preferences.getString("s", null);
 
                     String s1[]=s.split("/");
-                    wordsss.addAll(words);
 
-                    Log.d("size",wordsss.size()+"");
+
+                    Log.d("size",words.size()+"");
                     String s2=s1[0];
                     ArrayList<StoredDatabase> list=new ArrayList<>();
                     for(int i=0;i<wordsss.size();i++)

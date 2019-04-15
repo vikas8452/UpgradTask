@@ -50,10 +50,7 @@ import kick.career.upgradtask.RoomBuilder.StoredDatabase;
 
 public class UserInterestActivity extends AppCompatActivity {
 
-    private static final String PROFILE_URL = "https://api.linkedin.com/v1/people/~";
-    private static final String OAUTH_ACCESS_TOKEN_PARAM = "oauth2_access_token";
-    private static final String QUESTION_MARK = "?";
-    private static final String EQUALS = "=";
+  
 
     private TextView welcomeText;
     private TextView msg;
