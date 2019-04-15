@@ -69,6 +69,7 @@ public class UserInterestActivity extends AppCompatActivity {
     CheckableChipView chip5;
     CheckableChipView chip6;
     CheckableChipView chip7;
+    String s1[];    int k=1;
 
 
 
@@ -146,17 +147,15 @@ public class UserInterestActivity extends AppCompatActivity {
 
 
 
-                    String s1[]=s.split("/");
+                 s1=s.split("/");
                DatabaseHolder.getAppDatabase(UserInterestActivity.this).userDao().nukeDatabase();
 
 
-                        new GetProfileRequestAsyncTask().execute("https://api.stackexchange.com/2.2/questions?tagged="+s1[0]+";"+s1[1]+"&site=stackoverflow");
+               new GetProfileRequestAsyncTask().execute("https://api.stackexchange.com/2.2/questions?tagged="+"c"+"&site=stackoverflow");
 
 
 
-                    Intent startProfileActivity = new Intent(UserInterestActivity.this, QuestionListActivity.class);
-                    startActivity(startProfileActivity);
-                    finish();
+
 
                    // System.out
                            // .println(jsonGetRequest("https://api.stackexchange.com/2.2/questions?tagged=c;java&site=stackoverflow"));
@@ -222,7 +221,9 @@ public class UserInterestActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                rootobj = root.getAsJsonObject(); //May be an array, may be an object.
+
+                assert root != null;
+                rootobj = root.getAsJsonObject();
                 }
             Log.d("qwwqw",rootobj.toString());
 
@@ -234,42 +235,51 @@ public class UserInterestActivity extends AppCompatActivity {
             if (pd != null && pd.isShowing()) {
                 pd.dismiss();
             }
-            if (data != null) {
+
+
+            if(k==2) {
+
+            }
+
+            if (data != null&&k<4) {
+
                 Log.e("data", data.toString());
                 final DaoForHashMap mDao= DatabaseHolder.getAppDatabase(UserInterestActivity.this).userDao();
-        mDao.nukeDatabase();
+                mDao.nukeDatabase();
                 JsonArray jsonArray = (JsonArray) data.get("items");
-                int tag=0;
+                int tag= 0;
 
                 for(int i = 0; i < jsonArray.size(); i++){
 
                     tag++;
-
-
                     JsonObject obj = (JsonObject) jsonArray.get(i);
                     String link = obj.get("link").toString();
                     String title = obj.get("title").toString();
                     String questionId = obj.get("question_id").toString();
-
                     Log.e("linktitle",link+ " "+ title);
-
                     StoredDatabase word = new StoredDatabase();
                     word.setUid("c"+questionId);
                     word.setSpecialityName(title);
                     word.setSpecialityQuestionLink(link);
                     mDao.insert(word);
-
-
                 }
+
+             //   new GetProfileRequestAsyncTask().execute("https://api.stackexchange.com/2.2/questions?tagged="+s1[k]+"&site=stackoverflow");
+                ++k;
+                Intent startProfileActivity = new Intent(UserInterestActivity.this, QuestionListActivity.class);
+                startActivity(startProfileActivity);
+                finish();
 
 
             }
+
+
+
+
         }
 
 
     }
-
-    ;
 
     private void initialiseChip() {
         chip1 = findViewById(R.id.chip);
